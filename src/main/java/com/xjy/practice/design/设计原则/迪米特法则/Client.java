@@ -1,4 +1,4 @@
-package com.xjy.practice.设计模式.设计原则.迪米特法则;
+package com.xjy.practice.design.设计原则.迪米特法则;
 
 public class Client {
 

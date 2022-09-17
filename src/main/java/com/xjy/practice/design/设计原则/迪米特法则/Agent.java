@@ -1,4 +1,5 @@
-package com.xjy.practice.设计模式.设计原则.迪米特法则;
+package com.xjy.practice.design.设计原则.迪米特法则;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,7 +23,6 @@ public class Agent {
   }
 
   public void business() {
-
     System.out.println("通过" + name + star.getName() + "开始做生意和" + company.getName());
   }
 }

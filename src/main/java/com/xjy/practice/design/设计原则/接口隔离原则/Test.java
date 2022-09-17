@@ -1,4 +1,6 @@
-package com.xjy.practice.设计模式.设计原则.迪米特法则.接口隔离原则;
+package com.xjy.practice.design.设计原则.接口隔离原则;
+
+import com.xjy.practice.design.设计原则.接口隔离原则.MySafeDoor;
 
 public class Test {
 
