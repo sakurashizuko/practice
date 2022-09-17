@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>环形进度条</title>
+  <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"
+          type="text/javascript"></script>
+  <style type="text/css">
+    .center {
+      position: absolute;
+      width: 50%;
+      height: 80%;
+      box-shadow: 1px 2px 10px 0 rgba(0, 196, 196, 0.5);
+      border-radius: 10px;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      margin: auto;
+    }
+  </style>
+</head>
+
+<body>
+<div class="center" id="content"></div>
+<script type="text/javascript">
+
+  let dates = [];
+  let weights = [];
+  $.ajax({
+    type: "get",
+    async: false,
+    url: "http://localhost:8081/weight/getRecords",
+    dataType: "json",        //返回数据形式为json
+    success: function (data) {
+      for (let i = 0; i < data.length; i++) {
+        dates.push(data[i].recordTime);    //挨个取出类别并填入类别数组
+        weights.push(data[i].weight);    //挨个取出类别并填入类别数组
+
+      }
+
+    },
+    error: function (errorMsg) {
+      console.info(errorMsg);
+    }
+  });
+  let minNum = Math.ceil(weights[0]);
+
+  for (let num of weights) {
+    let weight = Math.ceil(num);
+    if (weight < minNum) {
+      minNum = weight;
+    }
+  }
+
+  let target_wight = 108.0;
+  let begin_wight = parseFloat(weights[0]);
+  let maxValue = (begin_wight - target_wight).toFixed(2);//进度条最大值
+
+  let date = dates.length - 11;
+  let now_wight = parseFloat(weights[weights.length - 1]);
+  let value = (begin_wight - now_wight).toFixed(2);
+  let remain_weight = (now_wight - target_wight).toFixed(2);
+  let lost = (value / maxValue * 100).toFixed(2);//对小数点后3位四舍五入
+  let markWord = '革命尚未成功,同志仍需努力!!';
+  if (lost >= 100) {
+    lost = 100;
+    markWord = 'WOW!! o(￣▽￣)ｄ';
+  }
+
+  let pipe = echarts.init(document.getElementById('content'));
+  let option = {
+    title: {
+      //标题内容
+      text: '   ',
+      textStyle: {
+        fontWeight: 'bold',
+        fontFamily: 'Microsoft YaHei',
+        fontSize: 24
+      },
+      //标题位置
+      top: '5%',
+      left: '5%'
+    },
+    //环形中间文字
+    graphic: [
+      //第一行文字
+      //内容 + 位置
+      {
+        type: 'text',
+        left: 'center',
+        top: '48%',
+        style: {
+          //value当前进度
+          text: 'Day[' + date + '] remain [' + remain_weight + '] to lost',
+          textAlign: 'center',
+          fill: '#000',
+          fontSize: 28
+        }
+      },
+      //第二行文字
+      //内容 + 位置
+      {
+        type: 'text',
+        left: 'center',
+        top: '55%',
+        style: {
+          //maxValue进度条最大值
+          text: markWord,
+          textAlign: 'center',
+          fill: '#999',
+          fontSize: 24
+        }
+      }
+    ],
+    series: [{
+      type: 'pie',
+      radius: ['70%', '64%'],//['外圆大小', '内圆大小']
+      center: ['50%', '50%'],//圆心位置['左右'， '上下']
+      hoverAnimation: true,//取消鼠标悬停动画
+      animationEasing: 'cubicOut',//设置动画缓动效果
+      //取消显示饼图自带数据线条
+      labelLine: {
+        normal: {
+          show: false
+        }
+      },
+      //增加阴影效果
+      itemStyle: {
+        normal: {
+          shadowBlur: 200,
+          shadowColor: 'rgba(44, 196, 196, 0.8)'
+        }
+      },
+      data: [
+        //value当前进度 + 颜色
+        {
+          value: value,
+          itemStyle: {
+            normal: {
+              color: '#73DEB3'
+            }
+          }
+        },
+        //(maxValue进度条最大值 - value当前进度) + 颜色
+        {
+          value: maxValue - value,
+          itemStyle: {
+            normal: {
+              color: '#4ea3d0'
+            }
+          }
+        }
+      ]
+    }]
+  };
+  pipe.setOption(option);
+  //随着浏览器窗口大小改变而改变
+  window.addEventListener("resize", function () {
+    pipe.resize();
+  });
+</script>
+</body>
+
+</html>

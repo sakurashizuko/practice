@@ -1,0 +1,38 @@
+POST https://oapi.dingtalk.com/robot/send?access_token=9cc0cf46fb9bf0e4617577a2152caa2b3d4e7e41c9148633fe79099c3a480ffa
+Accept: application/json
+
+{
+{
+
+###
+
+# curl 'https://oapi.dingtalk.com/robot/send?access_token=xxxxxxxx'
+# -H 'Content-Type: application/json'
+# -d '{"msgtype": "text","text": {"content":"我就是我, 是不一样的烟火"}}'
+POST https://oapi.dingtalk.com/robot/send?access_token=9cc0cf46fb9bf0e4617577a2152caa2b3d4e7e41c9148633fe79099c3a480ffa
+Content-Type: application/json
+SEC0d9a900d5a6915d5ed0127aa753ebc260bf3bee62f29fba8dd70854089bc71bc
+{
+  "msgtype": "text",
+  "text": {
+    "content": "[myrecord]我就是我, 是不一样的烟火"
+  }
+}
+
+###
+
+# curl 'https://oapi.dingtalk.com/robot/send?access_token=xxxxxxxx'
+# -H 'Content-Type: application/json'
+# -d '{"msgtype": "text","text": {"content":"我就是我, 是不一样的烟火"}}'
+POST https://oapi.dingtalk.com/robot/send?access_token=xxxxxxxx
+Content-Type: application/json
+
+{
+  "msgtype": "text",
+  "text": {
+    "content": "我就是我, 是不一样的烟火"
+  }
+}
+
+###
+GET http://localhost:8081/weight/saveTodayWeight/63.2/1422/304/1

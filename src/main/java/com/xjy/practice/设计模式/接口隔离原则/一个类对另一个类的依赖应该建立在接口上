@@ -1,0 +1,7 @@
+一个类对另一个类的依赖应该建立在接口上，不应该继承或接触到另一个不需要使用的方法
+
+A class a 中 Define methodA methodB   class B only need method A  if extends A useless method A will be inherited
+
+interface A {methodA}
+interfaceB {methodB}
+ class B only need to implements interfaceA

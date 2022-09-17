@@ -1,0 +1,10 @@
+package com.xjy.practice.service;
+
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.xjy.practice.model.RUser;
+
+
+public interface UserService extends IService<RUser> {
+
+
+}
